@@ -2,52 +2,56 @@
   "folders": [
     {
       "name": "🌳 root",
-      "path": "."
+      "path": ".",
     },
     {
-      "name": "🍂 dashboard",
-      "path": "apps/dashboard"
+      "name": "🍂 Main",
+      "path": "apps/main",
     },
     {
-      "name": "🍂 investments",
-      "path": "apps/investments"
+      "name": "🍂 Dashboard",
+      "path": "apps/dashboard",
     },
     {
-      "name": "🍂 feed",
-      "path": "apps/feed"
+      "name": "🍂 Investment",
+      "path": "apps/investment",
     },
     {
-      "name": "🍂 messages",
-      "path": "apps/messages"
+      "name": "🍂 Social",
+      "path": "apps/social",
     },
     {
-      "name": "🍂 profile",
-      "path": "apps/profile"
+      "name": "🍂 Chat",
+      "path": "apps/chat",
+    },
+    {
+      "name": "🍂 Profile",
+      "path": "apps/profile",
     },
     {
       "name": "📦 common-i18n",
-      "path": "packages/common-i18n"
+      "path": "packages/common-i18n",
     },
     {
       "name": "📦 core-lib",
-      "path": "packages/core-lib"
+      "path": "packages/core-lib",
     },
     {
       "name": "📦 db-main-prisma",
-      "path": "packages/db-main-prisma"
+      "path": "packages/db-main-prisma",
     },
     {
       "name": "📦 eslint-config-bases",
-      "path": "packages/eslint-config-bases"
+      "path": "packages/eslint-config-bases",
     },
     {
       "name": "📦 ts-utils",
-      "path": "packages/ts-utils"
+      "path": "packages/ts-utils",
     },
     {
       "name": "📦 ui-lib",
-      "path": "packages/ui-lib"
-    }
+      "path": "packages/ui-lib",
+    },
   ],
   "extensions": {
     "recommendations": [
@@ -55,8 +59,8 @@
       "dbaeumer.vscode-eslint",
       "esbenp.prettier-vscode",
       "ZixuanChen.vitest-explorer",
-      "Orta.vscode-jest"
-    ]
+      "Orta.vscode-jest",
+    ],
   },
   "settings": {
     "typescript.tsdk": "node_modules/typescript/lib",
@@ -64,12 +68,12 @@
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.codeActionsOnSave": {
-      "source.fixAll.eslint": "explicit"
+      "source.fixAll.eslint": "explicit",
     },
     // Disable vscode formatting for js,jsx,ts,tsx files
     // to allow dbaeumer.vscode-eslint to format them
     "[javascript]": {
-      "editor.formatOnSave": false
+      "editor.formatOnSave": false,
     },
     "eslint.alwaysShowStatus": true,
     // https://github.com/Microsoft/vscode-eslint#mono-repository-setup
@@ -85,7 +89,7 @@
       "./packages/db-main-prisma",
       "./packages/eslint-config-bases",
       "./packages/ts-utils",
-      "./packages/ui-lib"
+      "./packages/ui-lib",
     ],
     "jest.disabledWorkspaceFolders": [
       "🍂 dashboard",
@@ -97,7 +101,7 @@
       "📦 db-main-prisma",
       "📦 common-i18n",
       "📦 ui-lib",
-      "📦 core-lib"
-    ]
-  }
+      "📦 core-lib",
+    ],
+  },
 }

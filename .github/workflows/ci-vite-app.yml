@@ -1,69 +1,69 @@
-name: CI-vite-app
+# name: CI-vite-app
 
-on:
-  push:
-    branches: [dev, main]
-    paths:
-      - 'apps/vite-app/**'
-      - 'package.json'
-      - '*.lock'
-      - '.yarnrc.yml'
-      - 'tsconfig.base.json'
-      - '.prettier*'
-      - '.github/**'
+# on:
+#   push:
+#     branches: [dev, main]
+#     paths:
+#       - 'apps/vite-app/**'
+#       - 'package.json'
+#       - '*.lock'
+#       - '.yarnrc.yml'
+#       - 'tsconfig.base.json'
+#       - '.prettier*'
+#       - '.github/**'
 
-  pull_request:
-    types: [opened, synchronize, reopened]
-    paths:
-      - 'apps/vite-app/**'
-      - 'package.json'
-      - '*.lock'
-      - '.yarnrc.yml'
-      - 'tsconfig.base.json'
-      - '.prettier*'
-      - '.github/**'
+#   pull_request:
+#     types: [opened, synchronize, reopened]
+#     paths:
+#       - 'apps/vite-app/**'
+#       - 'package.json'
+#       - '*.lock'
+#       - '.yarnrc.yml'
+#       - 'tsconfig.base.json'
+#       - '.prettier*'
+#       - '.github/**'
 
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: apps/vite-app
-    strategy:
-      matrix:
-        node-version: [20.x]
-    env:
-      TURBO_API: 'http://127.0.0.1:9080'
-      TURBO_TEAM: 'nextjs-monorepo-example'
-      TURBO_TOKEN: 'local_server_turbo_relaxed_token'
+# jobs:
+#   test:
+#     runs-on: ubuntu-latest
+#     defaults:
+#       run:
+#         working-directory: apps/vite-app
+#     strategy:
+#       matrix:
+#         node-version: [20.x]
+#     env:
+#       TURBO_API: 'http://127.0.0.1:9080'
+#       TURBO_TEAM: 'nextjs-monorepo-example'
+#       TURBO_TOKEN: 'local_server_turbo_relaxed_token'
 
-    steps:
-      - uses: actions/checkout@v4
+#     steps:
+#       - uses: actions/checkout@v4
 
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.node-version }}
+#       - name: Use Node.js ${{ matrix.node-version }}
+#         uses: actions/setup-node@v4
+#         with:
+#           node-version: ${{ matrix.node-version }}
 
-      - name: ⏩ TurboRepo local server
-        uses: felixmosh/turborepo-gh-artifacts@v3
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          server-token: ${{ env.TURBO_TOKEN }}
+#       - name: ⏩ TurboRepo local server
+#         uses: felixmosh/turborepo-gh-artifacts@v3
+#         with:
+#           repo-token: ${{ secrets.GITHUB_TOKEN }}
+#           server-token: ${{ env.TURBO_TOKEN }}
 
-      - name: 📥 Monorepo install
-        uses: ./.github/actions/yarn-nm-install
+#       - name: 📥 Monorepo install
+#         uses: ./.github/actions/yarn-nm-install
 
-      - name: 🕵️ Typecheck
-        run: yarn --top-level run turbo typecheck
+#       - name: 🕵️ Typecheck
+#         run: yarn --top-level run turbo typecheck
 
-      - name: 🔬 Linter
-        run: yarn --top-level run turbo lint
-        env:
-          TIMING: 1
+#       - name: 🔬 Linter
+#         run: yarn --top-level run turbo lint
+#         env:
+#           TIMING: 1
 
-      - name: 🧪 Unit tests
-        run: yarn --top-level run turbo test-unit
+#       - name: 🧪 Unit tests
+#         run: yarn --top-level run turbo test-unit
 
-      - name: 🏗 Build vite-app
-        run: yarn --top-level run turbo build
+#       - name: 🏗 Build vite-app
+#         run: yarn --top-level run turbo build

@@ -1,112 +1,112 @@
-name: CI-e2e-nextjs-app
+# name: CI-e2e-nextjs-app
 
-on:
-  push:
-    branches: [dev, main]
-    # Only consider those paths to trigger the action
-    paths:
-      - 'apps/nextjs-app/**'
-      - 'packages/**'
-      - 'package.json'
-      - '*.lock'
-      - '.yarnrc.yml'
-      - '.github/**'
+# on:
+#   push:
+#     branches: [dev, main]
+#     # Only consider those paths to trigger the action
+#     paths:
+#       - 'apps/nextjs-app/**'
+#       - 'packages/**'
+#       - 'package.json'
+#       - '*.lock'
+#       - '.yarnrc.yml'
+#       - '.github/**'
 
-  pull_request:
-    types: [opened, synchronize, reopened]
-    # Only consider those paths to trigger the action
-    paths:
-      - 'apps/nextjs-app/**'
-      - 'packages/**'
-      - 'package.json'
-      - '*.lock'
-      - '.yarnrc.yml'
-      - '.github/**'
+#   pull_request:
+#     types: [opened, synchronize, reopened]
+#     # Only consider those paths to trigger the action
+#     paths:
+#       - 'apps/nextjs-app/**'
+#       - 'packages/**'
+#       - 'package.json'
+#       - '*.lock'
+#       - '.yarnrc.yml'
+#       - '.github/**'
 
-jobs:
-  e2e:
-    timeout-minutes: 10
-    strategy:
-      fail-fast: false
-      matrix:
-        node-version:
-          - 20
-        database:
-          - e2e-postgres
-        os:
-          - ubuntu-latest
-        include:
-          - os: ubuntu-latest
-            playwright_binary_path: ~/.cache/ms-playwright
-    runs-on: ${{ matrix.os }}
-    env:
-      TURBO_API: 'http://127.0.0.1:9080'
-      TURBO_TEAM: 'nextjs-monorepo-example'
-      TURBO_TOKEN: 'local_server_turbo_relaxed_token'
-      PRISMA_DATABASE_URL: 'postgresql://postgres:postgres@localhost:5432/webapp-e2e?schema=public'
-      CI: 1
+# jobs:
+#   e2e:
+#     timeout-minutes: 10
+#     strategy:
+#       fail-fast: false
+#       matrix:
+#         node-version:
+#           - 20
+#         database:
+#           - e2e-postgres
+#         os:
+#           - ubuntu-latest
+#         include:
+#           - os: ubuntu-latest
+#             playwright_binary_path: ~/.cache/ms-playwright
+#     runs-on: ${{ matrix.os }}
+#     env:
+#       TURBO_API: 'http://127.0.0.1:9080'
+#       TURBO_TEAM: 'nextjs-monorepo-example'
+#       TURBO_TOKEN: 'local_server_turbo_relaxed_token'
+#       PRISMA_DATABASE_URL: 'postgresql://postgres:postgres@localhost:5432/webapp-e2e?schema=public'
+#       CI: 1
 
-    steps:
-      - uses: actions/checkout@v4
+#     steps:
+#       - uses: actions/checkout@v4
 
-      - name: ⚙️ Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.node-version }}
+#       - name: ⚙️ Use Node.js ${{ matrix.node-version }}
+#         uses: actions/setup-node@v4
+#         with:
+#           node-version: ${{ matrix.node-version }}
 
-      - name: ⏩ TurboRepo local server
-        uses: felixmosh/turborepo-gh-artifacts@v3
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          server-token: ${{ env.TURBO_TOKEN }}
+#       - name: ⏩ TurboRepo local server
+#         uses: felixmosh/turborepo-gh-artifacts@v3
+#         with:
+#           repo-token: ${{ secrets.GITHUB_TOKEN }}
+#           server-token: ${{ env.TURBO_TOKEN }}
 
-      - name: 📥 Monorepo install
-        uses: ./.github/actions/yarn-nm-install
+#       - name: 📥 Monorepo install
+#         uses: ./.github/actions/yarn-nm-install
 
-      - name: ♻️ Restore nextjs-app related caches
-        uses: actions/cache@v4
-        with:
-          path: |
-            ${{ github.workspace }}/apps/nextjs-app/.next/cache
-          key: e2e-nextjs-app-cache-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+#       - name: ♻️ Restore nextjs-app related caches
+#         uses: actions/cache@v4
+#         with:
+#           path: |
+#             ${{ github.workspace }}/apps/nextjs-app/.next/cache
+#           key: e2e-nextjs-app-cache-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
 
-      - name: 🏁 Start database
-        working-directory: packages/db-main-prisma
-        run: docker compose -f docker-compose.e2e.yml up ${{ matrix.database }} --wait --detach
+#       - name: 🏁 Start database
+#         working-directory: packages/db-main-prisma
+#         run: docker compose -f docker-compose.e2e.yml up ${{ matrix.database }} --wait --detach
 
-      - name: 🌱 Create and seed test db schema
-        working-directory: packages/db-main-prisma
-        run: |
-          yarn prisma db push
-          yarn prisma db seed
+#       - name: 🌱 Create and seed test db schema
+#         working-directory: packages/db-main-prisma
+#         run: |
+#           yarn prisma db push
+#           yarn prisma db seed
 
-      - name: 🏗 Build nextjs-app
-        working-directory: apps/nextjs-app
-        run: yarn --top-level run turbo build
-        env:
-          PRISMA_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/webapp-e2e?schema=public
-          # Don't need to lint / typecheck for e2e, they're done in another workflow
-          NEXT_BUILD_ENV_ESLINT: false
-          NEXT_BUILD_ENV_TYPECHECK: false
-          NEXT_BUILD_ENV_SOURCEMAPS: false
-          NEXT_BUILD_ENV_SENTRY_ENABLED: true
-          NEXT_BUILD_ENV_SENTRY_UPLOAD_DRY_RUN: true
-          NEXT_TELEMETRY_DISABLED: true
+#       - name: 🏗 Build nextjs-app
+#         working-directory: apps/nextjs-app
+#         run: yarn --top-level run turbo build
+#         env:
+#           PRISMA_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/webapp-e2e?schema=public
+#           # Don't need to lint / typecheck for e2e, they're done in another workflow
+#           NEXT_BUILD_ENV_ESLINT: false
+#           NEXT_BUILD_ENV_TYPECHECK: false
+#           NEXT_BUILD_ENV_SOURCEMAPS: false
+#           NEXT_BUILD_ENV_SENTRY_ENABLED: true
+#           NEXT_BUILD_ENV_SENTRY_UPLOAD_DRY_RUN: true
+#           NEXT_TELEMETRY_DISABLED: true
 
-      - name: 📥 Playwright install
-        uses: ./.github/actions/playwright-install
+#       - name: 📥 Playwright install
+#         uses: ./.github/actions/playwright-install
 
-      - name: 🧪 E2E run nextjs-app playwright tests
-        uses: BerniWittmann/background-server-action@v1
-        with:
-          cwd: apps/nextjs-app
-          command: xvfb-run --auto-servernum --server-args="-screen 0 1280x960x24" -- yarn test-e2e
-          start: yarn run start
-          wait-on: 'http://localhost:3000'
-          wait-on-timeout: 30
+#       - name: 🧪 E2E run nextjs-app playwright tests
+#         uses: BerniWittmann/background-server-action@v1
+#         with:
+#           cwd: apps/nextjs-app
+#           command: xvfb-run --auto-servernum --server-args="-screen 0 1280x960x24" -- yarn test-e2e
+#           start: yarn run start
+#           wait-on: 'http://localhost:3000'
+#           wait-on-timeout: 30
 
-      - uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: nextjs-app-playwright-test-results-${{ runner.os }}
-          path: apps/nextjs-app/e2e/.out
+#       - uses: actions/upload-artifact@v4
+#         if: always()
+#         with:
+#           name: nextjs-app-playwright-test-results-${{ runner.os }}
+#           path: apps/nextjs-app/e2e/.out

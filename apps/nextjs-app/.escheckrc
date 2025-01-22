@@ -1,5 +1,0 @@
-{
-  "ecmaVersion": "es2022",
-  "module": false,
-  "files": "./.next/static/chunks/**/*.js"
-}

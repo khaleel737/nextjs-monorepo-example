@@ -28,8 +28,6 @@
     "dev:investments": "pnpm --filter \"investments\" run dev",
     "dev:dashboard": "pnpm --filter \"dashboard\" run dev",
     "check:git-pristine": "./scripts/check-git-pristine.sh",
-    "clean:global-cache": "pnpm rimraf ./.cache",
-    "clean:turbo": "pnpm turbo clean && pnpm rimraf --glob '**/.turbo' '**/turbo-*.log'",
     "deps:check": "pnpm npm-check-updates --configFileName .ncurc.yml --workspaces --root --mergeConfig",
     "deps:update": "pnpm npm-check-updates --configFileName .ncurc.yml -u --workspaces --root --mergeConfig",
     "g:build": "pnpm turbo run build",
@@ -50,11 +48,12 @@
     "g:turbo": "pnpm turbo",
     "install:playwright": "pnpm playwright install",
     "install:husky": "pnpm husky",
-    "clean:all": "pnpm -r run clean && pnpm clean:global-cache",
-    "install:all": "pnpm install && pnpm run g:codegen",
-    "nuke:node_modules": "pnpm rimraf --glob '**/node_modules'",
     "postinstall": "pnpm run install:husky && pnpm run g:codegen",
-    "check:install": "pnpm dlx @yarnpkg/doctor ."
+    "check:install": "pnpm dlx @yarnpkg/doctor .",
+    "clean:global-cache": "npx rimraf ./.cache",
+    "clean:turbo": "npx rimraf .turbo && npx rimraf --glob \"**/node_modules/.cache/turbo\"",
+    "clean:all": "npx rimraf --glob \"**/node_modules\" && npx rimraf .turbo && npx rimraf .cache",
+    "nuke:node_modules": "pnpm rimraf --glob '**/node_modules'"
   },
   "dependencies": {
     "cross-env": "7.0.3"

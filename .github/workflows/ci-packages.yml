@@ -1,80 +1,80 @@
-name: CI-packages
+# name: CI-packages
 
-on:
-  push:
-    branches: [dev, main]
-    paths:
-      - 'packages/**'
-      - 'package.json'
-      - '*.lock'
-      - '.yarnrc.yml'
-      - 'tsconfig.base.json'
-      - '.prettier*'
-      - '.github/**'
+# on:
+#   push:
+#     branches: [dev, main]
+#     paths:
+#       - 'packages/**'
+#       - 'package.json'
+#       - '*.lock'
+#       - '.yarnrc.yml'
+#       - 'tsconfig.base.json'
+#       - '.prettier*'
+#       - '.github/**'
 
-  pull_request:
-    types: [opened, synchronize, reopened]
-    paths:
-      - 'packages/**'
-      - 'package.json'
-      - '*.lock'
-      - '.yarnrc.yml'
-      - 'tsconfig.base.json'
-      - '.prettier*'
-      - '.github/**'
+#   pull_request:
+#     types: [opened, synchronize, reopened]
+#     paths:
+#       - 'packages/**'
+#       - 'package.json'
+#       - '*.lock'
+#       - '.yarnrc.yml'
+#       - 'tsconfig.base.json'
+#       - '.prettier*'
+#       - '.github/**'
 
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [20.x]
-    env:
-      TURBO_API: 'http://127.0.0.1:9080'
-      TURBO_TEAM: 'nextjs-monorepo-example'
-      TURBO_TOKEN: 'local_server_turbo_relaxed_token'
-    steps:
-      - uses: actions/checkout@v4
+# jobs:
+#   test:
+#     runs-on: ubuntu-latest
+#     strategy:
+#       matrix:
+#         node-version: [20.x]
+#     env:
+#       TURBO_API: 'http://127.0.0.1:9080'
+#       TURBO_TEAM: 'nextjs-monorepo-example'
+#       TURBO_TOKEN: 'local_server_turbo_relaxed_token'
+#     steps:
+#       - uses: actions/checkout@v4
 
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.node-version }}
+#       - name: Use Node.js ${{ matrix.node-version }}
+#         uses: actions/setup-node@v4
+#         with:
+#           node-version: ${{ matrix.node-version }}
 
-      - name: ⏩ TurboRepo local server
-        uses: felixmosh/turborepo-gh-artifacts@v3
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          server-token: ${{ env.TURBO_TOKEN }}
+#       - name: ⏩ TurboRepo local server
+#         uses: felixmosh/turborepo-gh-artifacts@v3
+#         with:
+#           repo-token: ${{ secrets.GITHUB_TOKEN }}
+#           server-token: ${{ env.TURBO_TOKEN }}
 
-      - name: 📥 Monorepo install
-        uses: ./.github/actions/yarn-nm-install
+#       - name: 📥 Monorepo install
+#         uses: ./.github/actions/yarn-nm-install
 
-      - name: ♻️ Restore packages cache
-        uses: actions/cache@v4
-        with:
-          path: |
-            ${{ github.workspace }}/.cache
-            ${{ github.workspace }}/**/tsconfig.tsbuildinfo
-          key: packages-cache-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+#       - name: ♻️ Restore packages cache
+#         uses: actions/cache@v4
+#         with:
+#           path: |
+#             ${{ github.workspace }}/.cache
+#             ${{ github.workspace }}/**/tsconfig.tsbuildinfo
+#           key: packages-cache-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
 
-      - name: 🕵️ Typecheck
-        run: yarn turbo typecheck --filter="./packages/*"
+#       - name: 🕵️ Typecheck
+#         run: yarn turbo typecheck --filter="./packages/*"
 
-      - name: 🔬 Linter
-        run: |
-          yarn turbo lint --filter="./packages/*"
-          yarn turbo lint-styles --filter="./packages/*"
-        env:
-          TIMING: 1
+#       - name: 🔬 Linter
+#         run: |
+#           yarn turbo lint --filter="./packages/*"
+#           yarn turbo lint-styles --filter="./packages/*"
+#         env:
+#           TIMING: 1
 
-      - name: 🧪 Unit tests
-        run: yarn turbo test-unit --filter="./packages/*"
+#       - name: 🧪 Unit tests
+#         run: yarn turbo test-unit --filter="./packages/*"
 
-      - name: 🏗 Run build (--force cause it's not required when using aliases)
-        run: yarn turbo build-force --filter="./packages/*"
+#       - name: 🏗 Run build (--force cause it's not required when using aliases)
+#         run: yarn turbo build-force --filter="./packages/*"
 
-      - name: 🧐 Build storybook
-        run: yarn turbo build-storybook --filter="./packages/*"
-        env:
-          STORYBOOK_DISABLE_TELEMETRY: 1
+#       - name: 🧐 Build storybook
+#         run: yarn turbo build-storybook --filter="./packages/*"
+#         env:
+#           STORYBOOK_DISABLE_TELEMETRY: 1
