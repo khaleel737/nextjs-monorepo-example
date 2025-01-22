@@ -1,1 +1,1 @@
-yarn g:lint-staged-files --debug
+# pnpm g:lint-staged-files --debug

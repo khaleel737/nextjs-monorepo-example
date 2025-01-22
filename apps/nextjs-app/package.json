@@ -17,7 +17,7 @@
   "scripts": {
     "build": "next build",
     "build-fast": "cross-env NEXT_BUILD_ENV_SENTRY_ENABLED=0 NEXT_BUILD_ENV_SOURCEMAPS=0 NEXT_BUILD_ENV_TYPECHECK=0 NEXT_BUILD_ENV_LINT=0 next build",
-    "bundle-analyze": "cross-env ANALYZE=true NEXT_BUILD_ENV_SENTRY_ENABLED=1 NEXT_BUILD_ENV_TYPECHECK=0 NEXT_BUILD_ENV_LINT=0 yarn build",
+    "bundle-analyze": "cross-env ANALYZE=true NEXT_BUILD_ENV_SENTRY_ENABLED=1 NEXT_BUILD_ENV_TYPECHECK=0 NEXT_BUILD_ENV_LINT=0 pnpm build",
     "check-dist": "es-check -v",
     "check-size": "size-limit --highlight-less",
     "clean": "rimraf ./.next ./.out ./coverage ./tsconfig.tsbuildinfo ./node_modules/.cache",
@@ -26,7 +26,7 @@
     "flamegraph-home": "npx 0x --output-dir './.debug/flamegraph/{pid}.0x' --on-port 'autocannon http://localhost:$PORT --duration 20' -- node ../../node_modules/.bin/next start",
     "lint": "TIMING=1 eslint . --ext .ts,.tsx,.js,.jsx,.cjs,.mjs,.mdx,.graphql --cache --cache-location ../../.cache/eslint/nextjs-app.eslintcache",
     "start": "next start",
-    "test": "yarn test-unit",
+    "test": "pnpm test-unit",
     "test-e2e": "cross-env E2E_WEBSERVER_MODE=BUILD_AND_START playwright test",
     "test-unit": "vitest run",
     "test-unit-watch": "vitest watch --ui",
