@@ -23,15 +23,15 @@
     "directory": "packages/ts-utils"
   },
   "scripts": {
-    "build": "echo \"Unrequired and disabled when using tsonfig paths aliases, run 'build-force' to test a build.\"",
+    "build": "modern build",
+    "dev": "modern dev",
+    "test": "modern test",
     "build-force": "tsup",
     "check-dist": "es-check -v",
     "check-size": "size-limit",
     "clean": "rimraf ./dist ./coverage ./tsconfig.tsbuildinfo",
-    "dev": "tsup --watch",
     "fix-all-files": "eslint . --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts --fix",
     "lint": "eslint . --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts --cache --cache-location ../../.cache/eslint/ts-utils.eslintcache",
-    "test": "vitest run",
     "test-unit": "vitest run",
     "test-unit-watch": "vitest watch --ui",
     "typecheck": "tsc --project ./tsconfig.json --noEmit"
@@ -45,6 +45,7 @@
     "es-check": "7.2.1",
     "eslint": "8.57.1",
     "get-tsconfig": "4.8.1",
+    "@modern-js/module-tools": "^2.48.3",
     "prettier": "3.4.2",
     "rimraf": "6.0.1",
     "size-limit": "11.1.6",

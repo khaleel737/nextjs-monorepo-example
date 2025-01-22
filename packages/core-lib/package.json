@@ -35,13 +35,13 @@
     "directory": "packages/core-lib"
   },
   "scripts": {
-    "build": "echo \"Unrequired and disabled when using tsonfig paths aliases, run 'build-force' to test a build.\"",
+    "build": "modern build",
+    "dev": "modern dev",
+    "test": "modern test",
     "build-force": "tsup",
     "clean": "rimraf ./dist ./coverage ./tsconfig.tsbuildinfo",
-    "dev": "tsup --watch",
     "fix-all-files": "eslint . --ext .ts,.tsx,.js,.jsx,.cjs,.mjs --fix",
     "lint": "eslint . --ext .ts,.tsx,.js,.jsx,.cjs,.mjs --cache --cache-location ../../.cache/eslint/core-lib.eslintcache",
-    "test": "run-s test-unit",
     "test-unit": "vitest run",
     "test-unit-watch": "vitest watch --ui",
     "typecheck": "tsc --project ./tsconfig.json --noEmit"
@@ -63,6 +63,7 @@
     "@your-org/eslint-config-bases": "workspace:^",
     "cross-env": "7.0.3",
     "eslint": "8.57.1",
+    "@modern-js/module-tools": "^2.48.3",
     "npm-run-all2": "7.0.2",
     "prettier": "3.4.2",
     "react": "18.3.1",
