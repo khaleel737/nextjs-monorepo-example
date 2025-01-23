@@ -32,7 +32,7 @@
     "deps:update": "pnpm npm-check-updates --configFileName .ncurc.yml -u --workspaces --root --mergeConfig",
     "g:build": "pnpm turbo run build",
     "build:all": "pnpm --filter \"./apps/**\" run build",
-    "start:all": "pnpm --filter \"./apps/**\" --parallel run start",
+    "start:all": "pnpm --filter \"./apps/**\" --parallel run start:prod",
     "g:changeset": "pnpm changeset",
     "g:check-dist": "pnpm turbo run check-dist",
     "g:clean": "pnpm clean:global-cache && pnpm clean:turbo && pnpm rimraf ./out && pnpm workspaces foreach -A -ptv run clean",
