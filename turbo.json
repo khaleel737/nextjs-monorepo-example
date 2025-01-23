@@ -10,13 +10,16 @@
       "outputs": ["src/generated/**"]
     },
     "build": {
-      "outputs": ["dist/**"]
+      // "outputs": ["dist/**"]
+      "dependsOn": ["^build"],
+      "inputs": ["$TURBO_DEFAULT$", ".env*"],
+      "outputs": [".next/**", "!.next/cache/**"]
       // This repo example relies on tsconfig paths to ease starting
       // "dependsOn": ["^build"]
     },
-    "build-force": {
-      "outputs": ["dist/**"]
-    },
+    // "build-force": {
+    //   "outputs": ["dist/**"]
+    // },
     "test": {},
     "test-unit": {},
     "lint": {
