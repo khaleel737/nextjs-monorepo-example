@@ -2,6 +2,5 @@
   "buildCommand": "pnpm run g:build",
   "outputDirectory": ".next",
   "installCommand": "pnpm install",
-  "framework": "nextjs",
-  "monorepo": true
+  "framework": "nextjs"
 }
