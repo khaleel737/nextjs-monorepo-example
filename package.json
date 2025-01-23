@@ -56,7 +56,8 @@
     "nuke:node_modules": "pnpm rimraf --glob '**/node_modules'"
   },
   "dependencies": {
-    "cross-env": "7.0.3"
+    "cross-env": "7.0.3",
+    "next": "^14.2.23"
   },
   "devDependencies": {
     "@changesets/changelog-github": "0.5.0",
