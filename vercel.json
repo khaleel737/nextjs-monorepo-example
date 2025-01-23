@@ -1,6 +1,6 @@
 {
   "buildCommand": "pnpm turbo run build",
-  "outputDirectory": "apps/main/.next",
-  "installCommand": "pnpm config set registry https://registry.npmjs.org/ && pnpm install --no-frozen-lockfile",
+  "outputDirectory": ".next/**",
+  "installCommand": "pnpm install",
   "framework": "nextjs"
 }
