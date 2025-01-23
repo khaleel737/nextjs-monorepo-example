@@ -1,6 +1,6 @@
 {
   "buildCommand": "pnpm turbo run build",
-  "outputDirectory": ".next/**",
-  "installCommand": "pnpm install",
+  "outputDirectory": "apps/main/.next",
+  "installCommand": "pnpm install --no-frozen-lockfile --shamefully-hoist true",
   "framework": "nextjs"
 }
