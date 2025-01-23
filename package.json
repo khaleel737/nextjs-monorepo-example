@@ -21,6 +21,7 @@
   "homepage": "https://github.com/belgattitude/nextjs-monorepo-example",
   "repository": "belgattitude/nextjs-monorepo-example",
   "scripts": {
+    "preinstall": "npx only-allow pnpm",
     "dev:all": "pnpm --filter \"./apps/**\" --parallel run dev",
     "dev:profile": "pnpm --filter \"profile\" run dev",
     "dev:messages": "pnpm --filter \"messages\" run dev",
@@ -53,7 +54,9 @@
     "clean:global-cache": "npx rimraf ./.cache",
     "clean:turbo": "npx rimraf .turbo && npx rimraf --glob \"**/node_modules/.cache/turbo\"",
     "clean:all": "npx rimraf --glob \"**/node_modules\" && npx rimraf .turbo && npx rimraf .cache",
-    "nuke:node_modules": "pnpm rimraf --glob '**/node_modules'"
+    "nuke:node_modules": "pnpm rimraf --glob '**/node_modules'",
+    "clean:modules": "find . -name 'node_modules' -type d -prune -exec rm -rf '{}' +",
+    "clean:install": "pnpm clean:modules && pnpm install"
   },
   "dependencies": {
     "cross-env": "7.0.3",

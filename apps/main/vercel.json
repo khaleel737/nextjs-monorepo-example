@@ -1,6 +1,6 @@
 {
   "buildCommand": "pnpm run g:build",
   "outputDirectory": ".next",
-  "installCommand": "pnpm install",
+  "installCommand": "pnpm install --no-frozen-lockfile --shamefully-hoist",
   "framework": "nextjs"
 }
