@@ -1,6 +1,24 @@
 {
   "buildCommand": "pnpm turbo run build",
   "outputDirectory": "apps/main/.next",
-  "installCommand": "pnpm install --no-frozen-lockfile --shamefully-hoist true",
-  "framework": "nextjs"
+  "installCommand": "pnpm install",
+  "framework": "nextjs",
+  "rewrites": [
+    {
+      "source": "/dashboard/:path*",
+      "destination": "/dashboard/:path*"
+    },
+    {
+      "source": "/chat/:path*",
+      "destination": "/chat/:path*"
+    },
+    {
+      "source": "/profile/:path*",
+      "destination": "/profile/:path*"
+    },
+    {
+      "source": "/investment/:path*",
+      "destination": "/investment/:path*"
+    }
+  ]
 }

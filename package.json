@@ -22,12 +22,14 @@
   "repository": "belgattitude/nextjs-monorepo-example",
   "scripts": {
     "preinstall": "npx only-allow pnpm",
-    "dev:all": "pnpm --filter \"./apps/**\" --parallel run dev",
-    "dev:profile": "pnpm --filter \"profile\" run dev",
+    "dev:all": "concurrently \"pnpm run dev:main\" \"pnpm run dev:dashboard\" \"pnpm run dev:chat\" \"pnpm run dev:profile\" \"pnpm run dev:investment\"",
+    "dev:main": "pnpm --filter \"main\" run dev",
+    "dev:dashboard": "PORT=3002 pnpm --filter \"dashboard\" run dev",
+    "dev:chat": "PORT=3003 pnpm --filter \"chat\" run dev",
+    "dev:profile": "PORT=3004 pnpm --filter \"profile\" run dev",
+    "dev:investment": "PORT=3005 pnpm --filter \"investment\" run dev",
     "dev:messages": "pnpm --filter \"messages\" run dev",
     "dev:feed": "pnpm --filter \"feed\" run dev",
-    "dev:investments": "pnpm --filter \"investments\" run dev",
-    "dev:dashboard": "pnpm --filter \"dashboard\" run dev",
     "check:git-pristine": "./scripts/check-git-pristine.sh",
     "deps:check": "pnpm npm-check-updates --configFileName .ncurc.yml --workspaces --root --mergeConfig",
     "deps:update": "pnpm npm-check-updates --configFileName .ncurc.yml -u --workspaces --root --mergeConfig",
@@ -56,7 +58,10 @@
     "clean:all": "npx rimraf --glob \"**/node_modules\" && npx rimraf .turbo && npx rimraf .cache",
     "nuke:node_modules": "pnpm rimraf --glob '**/node_modules'",
     "clean:modules": "find . -name 'node_modules' -type d -prune -exec rm -rf '{}' +",
-    "clean:install": "pnpm clean:modules && pnpm install"
+    "clean:install": "pnpm clean:modules && pnpm install",
+    "build:prod": "pnpm turbo run build --filter=main... --filter=dashboard... --filter=chat... --filter=profile... --filter=investment...",
+    "deploy:prod": "vercel --prod",
+    "deploy:staging": "vercel"
   },
   "dependencies": {
     "cross-env": "7.0.3",

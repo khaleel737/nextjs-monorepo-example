@@ -1,6 +1,12 @@
 {
   "buildCommand": "cd ../.. && pnpm turbo run build --filter=investment...",
   "outputDirectory": ".next",
-  "installCommand": "cd ../.. && pnpm install --no-frozen-lockfile --shamefully-hoist true",
-  "framework": "nextjs"
+  "installCommand": "cd ../.. && pnpm install",
+  "framework": "nextjs",
+  "rewrites": [
+    {
+      "source": "/investment/:path*",
+      "destination": "/:path*"
+    }
+  ]
 }

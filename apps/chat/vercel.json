@@ -1,6 +1,12 @@
 {
   "buildCommand": "cd ../.. && pnpm turbo run build --filter=chat...",
   "outputDirectory": ".next",
-  "installCommand": "cd ../.. && pnpm install --no-frozen-lockfile --shamefully-hoist true",
-  "framework": "nextjs"
+  "installCommand": "cd ../.. && pnpm install",
+  "framework": "nextjs",
+  "rewrites": [
+    {
+      "source": "/chat/:path*",
+      "destination": "/:path*"
+    }
+  ]
 }

@@ -1,6 +1,12 @@
 {
-  "buildCommand": "pnpm run g:build",
+  "buildCommand": "cd ../.. && pnpm turbo run build --filter=main...",
   "outputDirectory": ".next",
-  "installCommand": "pnpm install --no-frozen-lockfile --shamefully-hoist",
-  "framework": "nextjs"
+  "installCommand": "cd ../.. && pnpm install",
+  "framework": "nextjs",
+  "rewrites": [
+    {
+      "source": "/main/:path*",
+      "destination": "/:path*"
+    }
+  ]
 }

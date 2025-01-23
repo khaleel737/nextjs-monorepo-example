@@ -1,11 +1,11 @@
 {
-  "buildCommand": "cd ../.. && pnpm turbo run build --filter=profile...",
+  "buildCommand": "cd ../.. && pnpm turbo run build --filter=social...",
   "outputDirectory": ".next",
   "installCommand": "cd ../.. && pnpm install",
   "framework": "nextjs",
   "rewrites": [
     {
-      "source": "/profile/:path*",
+      "source": "/social/:path*",
       "destination": "/:path*"
     }
   ]
